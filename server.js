@@ -1,22 +1,31 @@
-const { app } = require("./app");
+const dotenv = require('dotenv');
 
-const { db } = require("./utils/database.util");
+const { app } = require('./app');
+
+// Utils
+const { initModels } = require('./models/initModels');
+const { db } = require('./utils/database.util');
+
+dotenv.config({ path: './config.env' });
 
 const startServer = async () => {
-  try {
-    await db.authenticate();
+	try {
+		await db.authenticate();
 
-    await db.sync();
+		// Establish the relations between models
+		initModels();
 
-    // Set server to listen
-    const PORT = 4000;
+		await db.sync();
 
-    app.listen(PORT, () => {
-      console.log(`Express app running! in port ${PORT}`);
-    });
-  } catch (error) {
-    console.log(error);
-  }
+		// Set server to listen
+		const PORT = 4000;
+
+		app.listen(PORT, () => {
+			console.log('Express app running!');
+		});
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 startServer();
