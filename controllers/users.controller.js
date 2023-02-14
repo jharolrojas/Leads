@@ -4,6 +4,7 @@ const { UseRole } = require("../models/useRole.model");
 const { IdentificationType } = require("../models/identificationType.model");
 const { ref, uploadBytes, getDownloadURL } = require("firebase/storage");
 const { storage } = require("../utils/firebase.util");
+const { generateImgFirebase } = require("../utils/firebase.util");
 const bcrypt = require("bcryptjs");
 const { catchAsync } = require("../utils/catchAsync.util.js");
 const { AppError } = require("../utils/appError.util");
@@ -12,16 +13,19 @@ dotenv.config({ path: "./config.env" });
 
 const getAllUsers = catchAsync(async (req, res, next) => {
   const users = await User.findAll({
-    attributes: { exclude: ["password", "createdAt", "updatedAt"] }
+    attributes: { exclude: ["password", "createdAt", "updatedAt"] },
   });
 
   const postsWithImgsPromises = users.map(async (user) => {
-    const imgRef = ref(storage, user.profilePicture);
+    if (user.profilePicture) {
+      const imgRef = ref(storage, user.profilePicture);
     const imgUrl = await getDownloadURL(imgRef);
 
     user.profilePicture = imgUrl;
 
     return user;
+    }
+    
   });
 
   await Promise.all(postsWithImgsPromises);
@@ -39,7 +43,6 @@ const createUser = catchAsync(async (req, res, next) => {
     identificationNumber,
     birthDate,
     gender,
-    profilePicture,
     status,
     identificationTypeId,
     userRoleId,
@@ -76,15 +79,6 @@ const createUser = catchAsync(async (req, res, next) => {
   if (!newUser) {
     return next(new AppError("Error, User not create", 407));
   }
-  const [originalName, ext] = req.file.originalname.split(".");
-
-  const filename = `img/${newUser.id}/${originalName}-${Date.now()}.${ext}`;
-
-  const imgRef = ref(storage, filename);
-
-  const result = await uploadBytes(imgRef, req.file.buffer);
-
-  await newUser.update({ profilePicture: result.metadata.fullPath });
 
   res.status(200).json({
     status: "success",
@@ -144,9 +138,37 @@ const disableAndEnableUser = catchAsync(async (req, res, next) => {
   });
 });
 
+const createImgUser = async (req, res, next) => {
+  const { sessionUser } = req;
+
+  // console.log(sessionUser.id,"hola");
+
+
+  // const user = await User.findOne({ where: { id: sessionUser.id } });
+
+  // if (!user) {
+  //   return next(new AppError("Error, user not found or disabled", 407));
+
+  // }
+  const result = generateImgFirebase(req.file,sessionUser.id);
+  // console.log(result);
+  // await Promise.all(result);
+  // await Promise(result)
+ 
+  // console.log(result);
+
+  // await user.update({ profilePicture: result });
+  res.status(200).json({
+    status: "success",
+    data: {
+      result,
+    },
+  });
+};
 module.exports = {
   getAllUsers,
   createUser,
   updateUser,
   disableAndEnableUser,
+  createImgUser,
 };

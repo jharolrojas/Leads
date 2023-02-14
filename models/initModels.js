@@ -8,16 +8,16 @@ const initModels = () => {
 
 
      // 1 <-> M
-     UseRole.hasMany(User);
+     UseRole.hasMany(User,{foreignKey:"userRoleId"});
      User.belongsTo(UseRole);
   
-     IdentificationType.hasMany(User);
+     IdentificationType.hasMany(User,{foreignKey: "identificationTypeId"});
      User.belongsTo(IdentificationType);
 
-     Service.hasMany(Lead);
+     Service.hasMany(Lead ,{foreignKey: "serviceId"});
      Lead.belongsTo(Service);
 
-     User.hasMany(Lead);
+     User.hasMany(Lead ,{foreignKey: "userId"});
      Lead.belongsTo(User);
 
 

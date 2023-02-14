@@ -3,8 +3,9 @@ const { catchAsync } = require("../utils/catchAsync.util.js");
 const { AppError } = require("../utils/appError.util");
 
 const getAllTypes = catchAsync(async (req, res, next) => {
-  const types = await IdentificationType.findAll({});
-
+  const types = await IdentificationType.findAll({
+    exclude: ["createdAt", "updatedAt"],
+  });
   res.status(200).json({
     status: "success",
     data: { types },
