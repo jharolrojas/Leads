@@ -1,5 +1,5 @@
 const express = require('express');
-
+const cors = require("cors");
 // Routers
 const { usersRouter } = require('./routes/users.route');
 const { userRoleRouter } = require('./routes/userRole.route');
@@ -12,7 +12,7 @@ const { leadRouter } = require('./routes/lead.route');
 
 // Init our Express app
 const app = express();
-
+app.use(cors());
 // Enable Express app to receive JSON data
 app.use(express.json());
 
