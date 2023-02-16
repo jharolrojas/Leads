@@ -1,4 +1,3 @@
-// Models
 const { User } = require("../models/user.model");
 const { UseRole } = require("../models/useRole.model");
 const { IdentificationType } = require("../models/identificationType.model");
@@ -81,8 +80,7 @@ const createUser = catchAsync(async (req, res, next) => {
   }
 
   res.status(200).json({
-    status: "success",
-    data: { newUser },
+    status: "success"
   });
 });
 
@@ -115,8 +113,7 @@ const updateUser = catchAsync(async (req, res, next) => {
   });
 
   res.status(200).json({
-    status: "success",
-    data: { user },
+    status: "success"
   });
 });
 
@@ -141,23 +138,9 @@ const disableAndEnableUser = catchAsync(async (req, res, next) => {
 const createImgUser = async (req, res, next) => {
   const { sessionUser } = req;
 
-  // console.log(sessionUser.id,"hola");
 
-
-  // const user = await User.findOne({ where: { id: sessionUser.id } });
-
-  // if (!user) {
-  //   return next(new AppError("Error, user not found or disabled", 407));
-
-  // }
   const result = generateImgFirebase(req.file,sessionUser.id);
-  // console.log(result);
-  // await Promise.all(result);
-  // await Promise(result)
  
-  // console.log(result);
-
-  // await user.update({ profilePicture: result });
   res.status(200).json({
     status: "success",
     data: {
