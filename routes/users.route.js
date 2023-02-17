@@ -18,7 +18,6 @@ usersRouter.post("/", createUserValidators, createUser);
 
 usersRouter.post("/login", login);
 
-usersRouter.get("/", getAllUsers);
 
 usersRouter.use(protectSession);
 
@@ -30,5 +29,6 @@ usersRouter.patch("/:userId", updateUser);
 
 usersRouter.delete("/:userId", disableAndEnableUser);
 
+usersRouter.get("/", getAllUsers);
 
 module.exports = { usersRouter };
