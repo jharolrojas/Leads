@@ -22,7 +22,7 @@ const protectOperator = catchAsync(async (req, res, next) => {
     const role = await UseRole.findOne({ where: { id:sessionUser.userRoleId } });
   
   
-    if (role.name !== "vendedor") {
+    if (role.name !== "vendedor"){
       return next(new AppError("You do not have the right access level.", 403));
     }
     next();
