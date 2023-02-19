@@ -7,6 +7,7 @@ const {
   updateUser,
   disableAndEnableUser,
   createImgUser,
+  getAllUserById
 } = require("../controllers/users.controller");
 const { upload } = require("../utils/multer.util");
 const { createUserValidators } = require("../middlewares/validator.middleware");
@@ -30,6 +31,8 @@ usersRouter.patch("/:userId", updateUser);
 usersRouter.delete("/:userId", disableAndEnableUser);
 
 usersRouter.get("/", getAllUsers);
+usersRouter.get("/user", getAllUserById);
+
 
 
 module.exports = { usersRouter };

@@ -18,13 +18,12 @@ const getAllUsers = catchAsync(async (req, res, next) => {
   const postsWithImgsPromises = users.map(async (user) => {
     if (user.profilePicture) {
       const imgRef = ref(storage, user.profilePicture);
-    const imgUrl = await getDownloadURL(imgRef);
+      const imgUrl = await getDownloadURL(imgRef);
 
-    user.profilePicture = imgUrl;
+      user.profilePicture = imgUrl;
 
-    return user;
+      return user;
     }
-    
   });
 
   await Promise.all(postsWithImgsPromises);
@@ -32,6 +31,23 @@ const getAllUsers = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: { users },
+  });
+});
+
+const getAllUserById = catchAsync(async (req, res, next) => {
+  const { sessionUser } = req;
+
+  if (sessionUser.profilePicture) {
+    const imgRef = ref(storage, sessionUser.profilePicture);
+    const imgUrl = await getDownloadURL(imgRef);
+
+    sessionUser.profilePicture = imgUrl;
+
+    // await Promise.all(postsWithImgsPromises);
+  }
+  res.status(200).json({
+    status: "success",
+    data: { sessionUser },
   });
 });
 
@@ -80,7 +96,7 @@ const createUser = catchAsync(async (req, res, next) => {
   }
 
   res.status(200).json({
-    status: "success"
+    status: "success",
   });
 });
 
@@ -113,7 +129,7 @@ const updateUser = catchAsync(async (req, res, next) => {
   });
 
   res.status(200).json({
-    status: "success"
+    status: "success",
   });
 });
 
@@ -138,9 +154,8 @@ const disableAndEnableUser = catchAsync(async (req, res, next) => {
 const createImgUser = async (req, res, next) => {
   const { sessionUser } = req;
 
+  const result = generateImgFirebase(req.file, sessionUser.id);
 
-  const result = generateImgFirebase(req.file,sessionUser.id);
- 
   res.status(200).json({
     status: "success",
     data: {
@@ -154,4 +169,5 @@ module.exports = {
   updateUser,
   disableAndEnableUser,
   createImgUser,
+  getAllUserById
 };
