@@ -20,7 +20,7 @@ const startServer = async () => {
 		// Set server to listen
 		const PORT = process.env.PORT || 4000;
 		app.listen(PORT, () => {
-			console.log('Express app running!');
+			console.log(`Express app running! in port ${PORT}`);
 		});
 	} catch (error) {
 		console.log(error);
