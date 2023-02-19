@@ -6,7 +6,7 @@ const {createUserRoleValidators} = require("../middlewares/validator.middleware"
 const {
 	getAllUserRole,
     createUserRole
-} = require('../controllers/UserRole.controller');
+} = require('../controllers/userRole.controller');
 
 
 const userRoleRouter = express.Router();
