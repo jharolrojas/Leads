@@ -3,7 +3,7 @@ const { catchAsync } = require("../utils/catchAsync.util.js");
 const { AppError } = require("../utils/appError.util");
 
 const getAllService = catchAsync(async (req, res, next) => {
-  const services = await Service.findAll({attributes: { exclude: [ "createdAt", "updatedAt"] },where:{status:true}});
+  const services = await Service.findAll({attributes: { exclude: [ "createdAt", "updatedAt"] }});
 
   res.status(200).json({
     status: "success",
