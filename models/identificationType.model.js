@@ -1,7 +1,7 @@
 const { db, DataTypes } = require('../utils/database.util');
 
 
-const IdentificationType = db.define('idetificationType', {
+const IdentificationType = db.define('identificationType', {
 	id: {
 		type: DataTypes.INTEGER,
 		primaryKey: true,

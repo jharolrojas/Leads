@@ -1,7 +1,7 @@
 const { db, DataTypes } = require('../utils/database.util');
 
 
-const UseRole = db.define('useRole', {
+const UserRole = db.define('userRole', {
 	id: {
 		type: DataTypes.INTEGER,
 		primaryKey: true,
@@ -16,4 +16,4 @@ const UseRole = db.define('useRole', {
 	
 });
 
-module.exports = { UseRole };
+module.exports = { UserRole };
