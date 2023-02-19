@@ -1,11 +1,11 @@
 const { catchAsync } = require("../utils/catchAsync.util.js");
 const { AppError } = require("../utils/appError.util");
-const { UseRole } = require("../models/useRole.model");
+const { UserRole } = require("../models/userRole.model");
 
 const protectAdmin = catchAsync(async (req, res, next) => {
   const { sessionUser } = req;
 
-  const role = await UseRole.findOne({ where: { id:sessionUser.userRoleId } });
+  const role = await UserRole.findOne({ where: { id:sessionUser.userRoleId } });
 
 
 
@@ -19,7 +19,7 @@ const protectAdmin = catchAsync(async (req, res, next) => {
 const protectOperator = catchAsync(async (req, res, next) => {
     const { sessionUser } = req;
   
-    const role = await UseRole.findOne({ where: { id:sessionUser.userRoleId } });
+    const role = await UserRole.findOne({ where: { id:sessionUser.userRoleId } });
   
   
     if (role.name !== "vendedor"){

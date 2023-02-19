@@ -1,5 +1,5 @@
 const { User } = require("../models/user.model");
-const { UseRole } = require("../models/useRole.model");
+const { UserRole } = require("../models/userRole.model");
 const { IdentificationType } = require("../models/identificationType.model");
 const { ref, uploadBytes, getDownloadURL } = require("firebase/storage");
 const { storage } = require("../utils/firebase.util");
@@ -48,7 +48,7 @@ const createUser = catchAsync(async (req, res, next) => {
     password,
   } = req.body;
 
-  const role = await UseRole.findOne({ where: { id: userRoleId } });
+  const role = await UserRole.findOne({ where: { id: userRoleId } });
   const identificationType = await IdentificationType.findOne({
     where: { id: identificationTypeId },
   });

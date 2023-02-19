@@ -133,7 +133,7 @@ const createServiceValidators = [
     .withMessage("description cannot be empty"),
   checkValidations,
 ];
-const createUseRoleValidators = [
+const createUserRoleValidators = [
   body("name")
     .isString()
     .withMessage("Name must be a string")
@@ -148,5 +148,5 @@ module.exports = {
   createIdentificationTypeValidators,
   createLeadValidators,
   createServiceValidators,
-  createUseRoleValidators,
+  createUserRoleValidators,
 };
