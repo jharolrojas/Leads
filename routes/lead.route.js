@@ -16,7 +16,7 @@ const leadRouter = express.Router();
 leadRouter.get('/', getAllLead);//cambiar a su lugar con token
 leadRouter.use(protectSession)
 
-leadRouter.post('/',  createLeadValidators,protectOperator,createLead);
+leadRouter.post('/',  createLeadValidators,createLead);
 
 leadRouter.patch('/:leadId',  updateLead);
 
