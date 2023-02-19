@@ -30,6 +30,7 @@ const createLead = catchAsync(async (req, res, next) => {
     negotationStatus,
     serviceId,
     dni,
+    identificationTypeId,
     userId: sessionUser.id,
   });
 
@@ -43,7 +44,7 @@ const createLead = catchAsync(async (req, res, next) => {
 });
 
 const updateLead = catchAsync(async (req, res, next) => {
-  const { name, lastName, gender, negotationStatus, serviceId } = req.body;
+  const { name, lastName, gender, negotationStatus, serviceId ,dni,identificationTypeId} = req.body;
   const { leadId } = req.params;
 
   const lead = await Lead.findOne({ where: { id: leadId } });
