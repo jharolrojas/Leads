@@ -31,7 +31,7 @@ const login = catchAsync(async (req, res, next) => {
 
 	res.status(200).json({
 		status: 'success',
-		data: { token },
+		data: {user:user.userRoleId,token },
 	});
 });
 
