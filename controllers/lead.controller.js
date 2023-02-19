@@ -13,7 +13,7 @@ const getAllLead = catchAsync(async (req, res, next) => {
 });
 
 const createLead = catchAsync(async (req, res, next) => {
-  const { name, lastName, gender, negotationStatus, serviceId, dni } = req.body;
+  const { name, lastName, gender, negotationStatus, serviceId, dni ,identificationTypeId} = req.body;
 
   const { sessionUser } = req;
 
@@ -52,7 +52,7 @@ const updateLead = catchAsync(async (req, res, next) => {
     return next(new AppError("Lead , not found", 404));
   }
 
-  await lead.update({ name, lastName, gender, negotationStatus, serviceId });
+  await lead.update({ name, lastName, gender, negotationStatus, serviceId,dni,identificationTypeId });
 
   res.status(200).json({
     status: "success",
