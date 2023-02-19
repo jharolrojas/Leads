@@ -20,7 +20,7 @@ leadRouter.post('/',  createLeadValidators,createLead);
 
 leadRouter.patch('/:leadId',  updateLead);
 
-leadRouter.patch('/status/:leadId',  statusLead);
+leadRouter.delete('/status/:leadId',  statusLead);
 
 
 

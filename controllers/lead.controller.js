@@ -80,4 +80,5 @@ module.exports = {
   createLead,
   updateLead,
   statusLead,
+
 };
