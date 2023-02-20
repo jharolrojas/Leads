@@ -1,27 +1,25 @@
-const express = require('express');
-const {createLeadValidators} = require("../middlewares/validator.middleware")
-const {protectSession} = require("../middlewares/protectSession.middleware")
-const {protectOperator} = require("../middlewares/auth.middleware")
+const express = require("express");
+const { createLeadValidators } = require("../middlewares/validator.middleware");
+const { protectSession } = require("../middlewares/protectSession.middleware");
+const { protectOperator } = require("../middlewares/auth.middleware");
 
 // Controllers
 const {
-    getAllLead,
-    createLead,
-    updateLead,
-    statusLead
-} = require('../controllers/lead.controller');
-
+  getAllLead,
+  createLead,
+  updateLead,
+  statusLead,
+} = require("../controllers/lead.controller");
 
 const leadRouter = express.Router();
-leadRouter.get('/', getAllLead);//cambiar a su lugar con token
-leadRouter.use(protectSession)
+leadRouter.use(protectSession);
 
-leadRouter.post('/',  createLeadValidators,createLead);
+leadRouter.get("/", getAllLead);
 
-leadRouter.patch('/:leadId',  updateLead);
+leadRouter.post("/", createLeadValidators, createLead);
 
-leadRouter.delete('/status/:leadId',  statusLead);
+leadRouter.patch("/:leadId", updateLead);
 
-
+leadRouter.delete("/status/:leadId", statusLead);
 
 module.exports = { leadRouter };
