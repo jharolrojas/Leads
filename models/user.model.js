@@ -31,7 +31,6 @@ const User = db.define("user", {
   profilePicture: {
     type: DataTypes.STRING,
     allowNull: true,
-    
   },
   password: {
     type: DataTypes.STRING,

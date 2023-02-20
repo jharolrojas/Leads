@@ -3,7 +3,9 @@ const { catchAsync } = require("../utils/catchAsync.util.js");
 const { AppError } = require("../utils/appError.util");
 
 const getAllUserRole = catchAsync(async (req, res, next) => {
-  const roles = await UserRole.findAll({attributes: { exclude: [ "createdAt", "updatedAt"] }});
+  const roles = await UserRole.findAll({
+    attributes: { exclude: ["createdAt", "updatedAt"] },
+  });
 
   res.status(200).json({
     status: "success",

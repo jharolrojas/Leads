@@ -1,8 +1,8 @@
 const { initializeApp } = require("firebase/app");
-const { getStorage ,ref, uploadBytes  } = require("firebase/storage");
+const { getStorage, ref, uploadBytes } = require("firebase/storage");
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config.env" });
-const {User} = require("../models/user.model")
+const { User } = require("../models/user.model");
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -15,12 +15,10 @@ const firebaseApp = initializeApp(firebaseConfig);
 const storage = getStorage(firebaseApp);
 
 const generateImgFirebase = async (img, userId) => {
-
   const user = await User.findOne({ where: { id: userId } });
 
   if (!user) {
     return next(new AppError("Error, user not found or disabled", 407));
-
   }
   const [originalName, ext] = img.originalname.split(".");
 
@@ -30,10 +28,9 @@ const generateImgFirebase = async (img, userId) => {
 
   const result = await uploadBytes(imgRef, img.buffer);
 
-  await user.update({ profilePicture: result.metadata.fullPath});
+  await user.update({ profilePicture: result.metadata.fullPath });
 
   return user;
 };
-
 
 module.exports = { storage, generateImgFirebase };

@@ -30,7 +30,6 @@ usersRouter.patch("/:userId", updateUser);
 
 usersRouter.delete("/:userId", disableAndEnableUser);
 
-
 usersRouter.get("/", getAllUsers);
 
 module.exports = { usersRouter };

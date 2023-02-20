@@ -3,7 +3,9 @@ const { catchAsync } = require("../utils/catchAsync.util.js");
 const { AppError } = require("../utils/appError.util");
 
 const getAllService = catchAsync(async (req, res, next) => {
-  const services = await Service.findAll({attributes: { exclude: [ "createdAt", "updatedAt"] }});
+  const services = await Service.findAll({
+    attributes: { exclude: ["createdAt", "updatedAt"] },
+  });
 
   res.status(200).json({
     status: "success",
@@ -27,16 +29,17 @@ const createService = catchAsync(async (req, res, next) => {
 
 const updateService = catchAsync(async (req, res, next) => {
   const { serviceId } = req.params;
-  const {description , status} = req.body;
+  const { description, status } = req.body;
 
   const service = await Service.findOne({ where: { id: serviceId } });
-  
+
   if (!service) {
     return next(new AppError("Error, service not found", 404));
   }
 
   await service.update({
-    description , status
+    description,
+    status,
   });
 
   res.status(200).json({
@@ -48,7 +51,7 @@ const statusService = catchAsync(async (req, res, next) => {
   const { serviceId } = req.params;
 
   const service = await Service.findOne({ where: { id: serviceId } });
-  
+
   if (!service) {
     return next(new AppError("Error, service not found", 404));
   }
@@ -62,10 +65,9 @@ const statusService = catchAsync(async (req, res, next) => {
   });
 });
 
-
 module.exports = {
   getAllService,
   createService,
   statusService,
-  updateService
+  updateService,
 };
