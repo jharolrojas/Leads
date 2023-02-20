@@ -7,7 +7,7 @@ const {
   updateUser,
   disableAndEnableUser,
   createImgUser,
-  getAllUserById
+  getAllUserById,
 } = require("../controllers/users.controller");
 const { upload } = require("../utils/multer.util");
 const { createUserValidators } = require("../middlewares/validator.middleware");
@@ -19,8 +19,8 @@ usersRouter.post("/", createUserValidators, createUser);
 
 usersRouter.post("/login", login);
 
-
 usersRouter.use(protectSession);
+usersRouter.get("/user", getAllUserById);
 
 usersRouter.patch("/img", upload.single("profilePicture"), createImgUser);
 
@@ -30,9 +30,7 @@ usersRouter.patch("/:userId", updateUser);
 
 usersRouter.delete("/:userId", disableAndEnableUser);
 
+
 usersRouter.get("/", getAllUsers);
-usersRouter.get("/user", getAllUserById);
-
-
 
 module.exports = { usersRouter };
